@@ -131,8 +131,8 @@ def draw_header_footer(canvas, doc):
     # 2. Define the relative paths from the script's directory to your images.
     #    The '/' operator in pathlib automatically handles joining paths correctly
     #    for any operating system (Windows, macOS, Linux).
-    logo_path = script_dir / "ReportImages" / "PRBlogo.png"
-    footer_path = script_dir / "ReportImages" / "PRBsignature.jpg"
+    logo_path = script_dir / "ReportImages" / "XYZlogo.png"
+    footer_path = script_dir / "ReportImages" / "XYZsignature.jpg"
 
     # Save the current state of the canvas
     canvas.saveState()
@@ -216,7 +216,7 @@ class ReportState(TypedDict):
     date: str
     subject: str
     project_dimensions: Dict[str, str]
-    prb_reference: str
+    XYZ_reference: str
     
     # Analysis results
     structure_analysis: Dict[str, Any]
@@ -268,7 +268,7 @@ def start_node(state: ReportState) -> ReportState:
     state["date"] = datetime.now().strftime("%Y-%m-%d")
     state["subject"] = "Structural Analysis and Rehabilitation Report"
     state["project_dimensions"] = config["defaults"]["project_dimensions"].copy()
-    state["prb_reference"] = "PRB-001"
+    state["XYZ_reference"] = "XYZ-001"
     
     state["messages"] = [SystemMessage(content=config["system_message"])]
     state["language"] = "french" # Modify to change language. "french" or anything else for English
@@ -517,8 +517,8 @@ def generate_solutions_node(state: ReportState) -> ReportState:
     "top_p": 0.2,
 }
         
-        #reader = PdfReader("D:\\Work\\2025\\Preco tool\\preco tool\\PRB offerings on Paint problems.pdf")        #This part will get replaced by RAG in MVP , In POC the reference pdf is just one so putting everything into context
-        reader = PdfReader("C:\\Users\\eduar\\INSUS\\pot-sand2\\be1\\PRB offerings on Paint problems.pdf") 
+        #reader = PdfReader("D:\\Work\\2025\\Preco tool\\preco tool\\XYZ offerings on Paint problems.pdf")        #This part will get replaced by RAG in MVP , In POC the reference pdf is just one so putting everything into context
+        reader = PdfReader("C:\\Users\\eduar\\INSUS\\pot-sand2\\be1\\XYZ offerings on Paint problems.pdf") 
         total_text=[]
         for page in reader.pages:
             text = page.extract_text()
@@ -593,7 +593,7 @@ def create_pdf_report_node(state: ReportState) -> ReportState:
             ['Project Reference:', state['project_reference']],
             ['Date:', state['date']],
             ['Subject:', state['subject']],
-            ['PRB Reference:', state['prb_reference']]
+            ['XYZ Reference:', state['XYZ_reference']]
         ]
         
         col_widths = [w * inch for w in config["pdf"]["table_col_widths"]]
@@ -786,7 +786,7 @@ def generate_report(
     project_reference: str,
     date: str,
     subject: str,
-    prb_reference: str,
+    XYZ_reference: str,
     client_details: Dict[str, str],
     service_provider_details: Dict[str, str]
 ):
@@ -816,7 +816,7 @@ def generate_report(
         "date": date,
         "subject": subject,
         "project_dimensions": {},  # or fill as needed
-        "prb_reference": prb_reference,
+        "XYZ_reference": XYZ_reference,
         "structure_analysis": {},
         "pathology_analysis": {},
         "solutions_analysis": {},
@@ -855,7 +855,7 @@ async def generate_report_api(
     project_reference: str = Form(...),
     date: str = Form(...),
     subject: str = Form(...),
-    prb_reference: str = Form(...),
+    XYZ_reference: str = Form(...),
     client_name: str = Form(...),
     client_address: str = Form(...),
     client_contact: str = Form(...),
@@ -890,9 +890,10 @@ async def generate_report_api(
         project_reference,
         date,
         subject,
-        prb_reference,
+        XYZ_reference,
         client_details,
         service_provider_details
     )
     # Optionally, clean up temp_dir after use
+
     return JSONResponse(content=result)
