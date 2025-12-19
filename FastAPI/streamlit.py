@@ -4,12 +4,12 @@ import requests
 from datetime import date
 from PIL import Image
 # --- Sidebar Branding ---
-st.sidebar.image(Image.open('PRBLogo.jpg'), width=5, use_column_width=True)
+st.sidebar.image(Image.open(''XYZ'Logo.jpg'), width=5, use_column_width=True)
 st.sidebar.markdown('<br><br>', unsafe_allow_html=True)
 st.sidebar.markdown('**POC developed by**')
 st.sidebar.image(Image.open('StrategicPortfolio.png'), width=120, use_column_width=True)
 
-# --- Main Title and PRB Logo ---
+# --- Main Title and 'XYZ' Logo ---
 st.title('STRUCTURAL ANALYSIS AND REHABILITATION REPORT')
 
 # --- Section 1: Project Details ---
@@ -20,7 +20,7 @@ with col1:
     date_value = st.date_input('Date', date(2025, 6, 30))
 with col2:
     subject = st.text_input('Subject', 'Structural Analysis and Rehabilitation Report')
-    prb_reference = st.text_input('PRB Reference', 'PRB-001')
+    'XYZ'_reference = st.text_input(''XYZ' Reference', ''XYZ'-001')
 
 # --- Section 2: Client Details ---
 st.header('2. Client Details')
@@ -56,7 +56,7 @@ if st.button('Generate Report'):
             'project_reference': project_reference,
             'date': date_value.strftime('%Y-%m-%d'),
             'subject': subject,
-            'prb_reference': prb_reference,
+            ''XYZ'_reference': 'XYZ'_reference,
             'client_name': client_name,
             'client_address': client_address,
             'client_contact': client_contact,
